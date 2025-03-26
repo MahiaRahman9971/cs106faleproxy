@@ -127,3 +127,24 @@ footer {
     color: #666;
     font-size: 0.875rem;
 }
+
+/* Styling for proxy links */
+.proxy-link {
+    color: #1e3a8a !important;
+    text-decoration: underline !important;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px dashed #1e3a8a;
+}
+
+.proxy-link:hover {
+    color: #4d7c0f !important;
+    border-bottom: 1px solid #4d7c0f;
+}
+
+.proxy-link:after {
+    content: '🔄';
+    font-size: 0.75em;
+    margin-left: 3px;
+    vertical-align: super;
+}

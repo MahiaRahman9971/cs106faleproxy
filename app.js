@@ -61,6 +61,16 @@ app.post('/fetch', async (req, res) => {
     
     // Process title separately
     const title = $('title').text().replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
+    
+    // Fix base URL to ensure relative links work properly
+    const baseUrl = new URL(url).origin;
+    // Add or update base tag in head
+    const baseTag = $('base');
+    if (baseTag.length) {
+      baseTag.attr('href', baseUrl + '/');
+    } else {
+      $('head').prepend(`<base href="${baseUrl}/">`);  
+    }
     $('title').text(title);
     
     return res.json({ 
