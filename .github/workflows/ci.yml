@@ -1,4 +1,4 @@
-name: Faleproxy CI
+name: Faleproxy CI/CD
 
 on:
   push:
@@ -27,6 +27,7 @@ jobs:
       run: npm ci
       
     - name: Run tests
+      id: run-tests
       run: npm run test:ci
       
     - name: Upload coverage report
@@ -37,7 +38,7 @@ jobs:
         
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && success()
     runs-on: ubuntu-latest
     
     steps:

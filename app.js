@@ -53,14 +53,37 @@ app.post('/fetch', async (req, res) => {
     }).each(function() {
       // Replace text content but not in URLs or attributes
       const text = $(this).text();
-      const newText = text.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
-      if (text !== newText) {
-        $(this).replaceWith(newText);
+      
+      // Only perform replacement if 'Yale' is actually present (case-insensitive)
+      if (text.match(/yale/i)) {
+        // Use case-insensitive replacement with proper case preservation
+        const newText = text.replace(/Yale/gi, function(match) {
+          // Preserve the case pattern of the original match
+          if (match === 'YALE') return 'FALE';
+          if (match === 'yale') return 'fale';
+          if (match === 'Yale') return 'Fale';
+          return 'Fale'; // Default case
+        });
+        
+        if (text !== newText) {
+          $(this).replaceWith(newText);
+        }
       }
     });
     
     // Process title separately
-    const title = $('title').text().replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
+    let title = $('title').text();
+    // Only replace if Yale is present
+    if (title.match(/yale/i)) {
+      title = title.replace(/Yale/gi, function(match) {
+        // Preserve the case pattern of the original match
+        if (match === 'YALE') return 'FALE';
+        if (match === 'yale') return 'fale';
+        if (match === 'Yale') return 'Fale';
+        return 'Fale'; // Default case
+      });
+    }
+    $('title').text(title);
     
     // Fix base URL to ensure relative links work properly
     const baseUrl = new URL(url).origin;
