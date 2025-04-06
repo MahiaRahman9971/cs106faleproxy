@@ -30,11 +30,7 @@ jobs:
       id: run-tests
       run: npm run test:ci
       
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage-report
-        path: coverage/
+    # Removed upload-artifact step due to GitHub Actions service issues
         
   deploy:
     needs: test
